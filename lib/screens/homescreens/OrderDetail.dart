@@ -32,6 +32,19 @@ backgroundColor: primaryColor,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "Delivery Date",
+                          style: Theme.of(context).textTheme.caption,
+                        ),
+                        Text(
+                          '09 Sep,2002',
+                          style: Theme.of(context).textTheme.caption,
+                        ),
+                      ]),
+
                   Divider(
                     color: Theme.of(context).cardColor,
                     thickness: 8.0,
