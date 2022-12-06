@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/Getorders.dart';
@@ -10,8 +11,8 @@ import 'package:flutter_app/models/adduser.dart';
 import 'package:http/http.dart';
 
 import 'package:http/http.dart' as http;
+// import 'package:nb_utils/nb_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 import '../models/BaseResponseModel.dart';
 import '../models/GetmeasurementModel.dart';
@@ -131,19 +132,19 @@ class NetworkHelper {
 
 
     categoryName=="Sherwani"?
-      response = await postRequest(
+    response = await postRequest(
       addmeasurement,
       {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "neck":neck,
           "biceps":biceps,
           "crossback":crossback,
@@ -156,7 +157,7 @@ class NetworkHelper {
           "coatlength":coatlength,
 
         }
-      },
+        )},
 
       bearerToken: true,
     ):
@@ -167,13 +168,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "neck":neck,
           "shoulder":shoulder,
           "sleeves":sleeves,
@@ -184,7 +185,7 @@ class NetworkHelper {
           "shalwarlength":shalwarlength,
 
         }
-      },
+        ) },
 
       bearerToken: true,
     ): categoryName=="Shalwar"?
@@ -194,13 +195,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
 
           "waist":waist,
 
@@ -209,7 +210,7 @@ class NetworkHelper {
           "shalwarlength":shalwarlength,
 
         }
-      },
+        ) },
 
       bearerToken: true,
     ): categoryName=="Kurta Trouuser"?
@@ -219,13 +220,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "neck":neck,
           "shoulder":shoulder,
           "sleeves":sleeves,
@@ -236,7 +237,7 @@ class NetworkHelper {
           "trouserlength":trouserlength,
 
         }
-      },
+        )},
 
       bearerToken: true,
     ):
@@ -248,13 +249,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "neck":neck,
           "biceps":biceps,
           "crossback":crossback,
@@ -267,7 +268,7 @@ class NetworkHelper {
           "coatlength":coatlength,
 
         }
-      },
+        )},
 
       bearerToken: true,
     ):
@@ -279,13 +280,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
 
           "waist":waist,
           "thigh":thigh,
@@ -293,7 +294,7 @@ class NetworkHelper {
           "trouserlength":trouserlength,
 
         }
-      },
+        )},
 
       bearerToken: true,
     ):
@@ -304,13 +305,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "neck":neck,
           "shoulder":shoulder,
           "belly":belly,
@@ -319,7 +320,7 @@ class NetworkHelper {
           "coatlength":coatlength,
 
         }
-      },
+        ) },
 
       bearerToken: true,
     ):
@@ -331,13 +332,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "neck":neck,
           "shoulder":shoulder,
           "sleeves":sleeves,
@@ -348,7 +349,7 @@ class NetworkHelper {
           "trouserlength":trouserlength,
 
         }
-      },
+        )},
 
       bearerToken: true,
     ):
@@ -359,13 +360,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "neck":neck,
           "shoulder":shoulder,
           "sleeves":sleeves,
@@ -374,7 +375,7 @@ class NetworkHelper {
           "shirtlength":shirtlength,
 
         }
-      },
+        ) },
 
       bearerToken: true,
     ):
@@ -385,13 +386,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "neck":neck,
           "shoulder":shoulder,
           "sleeves":sleeves,
@@ -401,7 +402,7 @@ class NetworkHelper {
           "kurtalength":kurtalength,
 
         }
-      },
+        )},
 
       bearerToken: true,
     ):
@@ -412,19 +413,19 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "waist":waist,
           "hip":hip,
           "trouserlength":trouserlength,
 
         }
-      },
+        ) },
 
       bearerToken: true,
     ):
@@ -435,13 +436,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "neck":neck,
           "biceps":biceps,
           "crossback":crossback,
@@ -456,7 +457,7 @@ class NetworkHelper {
 
 
         }
-      },
+        )},
 
       bearerToken: true,
     ):
@@ -467,13 +468,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "neck":neck,
           "biceps":biceps,
           "crossback":crossback,
@@ -488,7 +489,7 @@ class NetworkHelper {
 
 
         }
-      },
+        )},
 
       bearerToken: true,
     ):
@@ -498,13 +499,13 @@ class NetworkHelper {
 
         "user_id": user_id,
         "category": categoryName,
-        if (pickedAllFiles != []) "fabricImages": pickedAllFiles,
-        if (pickedFiles != []) "productImages": pickedFiles,
+        if (pickedAllFiles.isNotEmpty) "fabricImages": json.encode(pickedAllFiles),
+        if (pickedFiles.isNotEmpty) "productImages": json.encode(pickedFiles),
         if (customerfabric != null) "customerFabric": customerfabric,
         if (fabriccode !=  "" ) "fabricCode": fabriccode,
         if (productcode !=  "") "productCode": productcode,
         if (productlink != "") "productLink": productlink,
-        "measurement":{
+        "measurement":json.encode({
           "neck":neck,
           "biceps":biceps,
           "crossback":crossback,
@@ -519,7 +520,7 @@ class NetworkHelper {
 
 
         }
-      },
+        )   },
 
       bearerToken: true,
     );
@@ -617,7 +618,7 @@ class NetworkHelper {
     response = await postRequest(
       adduser,
       {
-      "email": email,
+        "email": email,
         "phone": phone,
         "name":name
       },
@@ -654,16 +655,16 @@ class NetworkHelper {
 
 
   Future<LoginSignupResponseModel?> userLogin(
-    String email,
-    String password,
-    String deviceToken,
-  ) async {
+      String email,
+      String password,
+      String deviceToken,
+      ) async {
     http.Response response;
 
     response = await postRequest(
       login,
       {
-      'email': email,
+        'email': email,
         'password': password,
         'deviceKey': deviceToken,
       },
@@ -886,7 +887,7 @@ class NetworkHelper {
       try {
         if (!noBaseUrl) {
           response =
-              await get(Uri.parse('${baseUrl}$endPoint'), headers: headers);
+          await get(Uri.parse('${baseUrl}$endPoint'), headers: headers);
           // jsonDecode(response.body)['message'];
           return response;
         } else {
@@ -931,7 +932,7 @@ class NetworkHelper {
       try {
         if (!noBaseUrl) {
           response =
-              await delete(Uri.parse('${baseUrl}$endPoint'), headers: headers);
+          await delete(Uri.parse('${baseUrl}$endPoint'), headers: headers);
           return response;
         } else {
           response = await delete(Uri.parse(endPoint), headers: headers);

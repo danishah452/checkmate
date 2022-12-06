@@ -37,12 +37,14 @@ dependencies:
   shared_preferences:
   velocity_x:
   flutter_spinkit:
-  nb_utils:
+#  nb_utils:
   dropdown_button2:
   animations:
   im_stepper:
   provider:
   image_picker:
+  connectivity_plus:
+  fluttertoast:
 #  eva_icons_flutter:
 #  fluttertoast:
 

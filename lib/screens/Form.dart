@@ -2,6 +2,7 @@
 
 
 import 'dart:convert';
+// import 'dart:html';
 import 'dart:math';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -10,13 +11,14 @@ import 'package:flutter/services.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:velocity_x/velocity_x.dart';
+// import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import 'package:intl/intl.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../controller/home_controller.dart';
 import '../helper/toast.dart';
@@ -59,11 +61,11 @@ class _PostTaskScreenState extends State<PostTaskScreen> {
   TextEditingController _productlinkController = TextEditingController();
   TextEditingController _customerfabricController = TextEditingController();
   int selected = 0;
-   String?  SelectedSize='';
-   String?  SelectedFabric='';
-   String?  Selectedpayment='';
-   String?  SelectedProduct='';
-   bool code=false;
+  String?  SelectedSize='';
+  String?  SelectedFabric='';
+  String?  Selectedpayment='';
+  String?  SelectedProduct='';
+  bool code=false;
   bool isExpanded = true;
   bool _isExpanded = true;
   bool expanding=true;
@@ -147,21 +149,21 @@ class _PostTaskScreenState extends State<PostTaskScreen> {
   ];
 
 
-  final List<String> _pickedAllFiles = [];
-  final List<String> _pickedFiles = [];
+  final List<File> _pickedAllFiles = [];
+  final List<File> _pickedFiles = [];
 
-  Future<String?> getImageFromGallery() async {
+  Future<File?> getImageFromGallery() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? _image = await _picker.pickImage(source: ImageSource.gallery);
 
     if (_image != null) {
-      final _imageInBase64 = base64Encode(File(_image.path).readAsBytesSync());
+      final _imageInBase64 = File(_image.path);
       return _imageInBase64;
     } else {
       return null;
     }
   }
-  Future getImageFromCamera() async {
+  Future<File?> getImageFromCamera() async {
     final ImagePicker _picker = ImagePicker();
 
     final pickedFile = await _picker.getImage(
@@ -172,7 +174,7 @@ class _PostTaskScreenState extends State<PostTaskScreen> {
     );
 
     if (pickedFile != null) {
-      final _imageInBase64 = base64Encode(File(pickedFile.path).readAsBytesSync());
+      final _imageInBase64 = File(pickedFile.path);
       // final _imageInBase64 = File(pickedFile.path);
 
       return _imageInBase64;
@@ -263,7 +265,7 @@ class _PostTaskScreenState extends State<PostTaskScreen> {
 
 
   int activeStep=0;
-   String? indexx;
+  String? indexx;
   String? categoryName;
   String selectedCategory = '';
   int tabIndex = 0;
@@ -291,140 +293,140 @@ class _PostTaskScreenState extends State<PostTaskScreen> {
     // ServicesProvider servicesProvider = myProvider.Provider.of<ServicesProvider>(context);
 
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          backgroundColor: primaryColor,
-          systemOverlayStyle: SystemUiOverlayStyle.light,
-          title: const Text("Order    ترتیب    "),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        title: const Text("Order    ترتیب    "),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
 
-              if(activeStep == 0){
-                Navigator.pop(context);
-              }else if(activeStep == 1){
-                activeStep = 0;
-                setState(() {
+            if(activeStep == 0){
+              Navigator.pop(context);
+            }else if(activeStep == 1){
+              activeStep = 0;
+              setState(() {
 
-                });
-              }else if(activeStep == 2){
-                activeStep = 1;
-                setState(() {
+              });
+            }else if(activeStep == 2){
+              activeStep = 1;
+              setState(() {
 
-                });
-              }
-             else {
-                activeStep =2 ;
-                setState(() {
+              });
+            }
+            else {
+              activeStep =2 ;
+              setState(() {
 
-                });
-              }
-            },
-          ),
+              });
+            }
+          },
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            // height: context.screenHeight,
-            padding: const EdgeInsets.all(18.0),
-            child: Column(
-              children: [
-                NumberStepper(
-                  stepColor: primaryColor,
-                  activeStepBorderColor: kPrimaryColor,
-                  activeStepColor: kPrimaryFadeTextColor,
-                  lineColor: kPrimaryColor,
-                  stepPadding: 15.0,
-                  numberStyle: TextStyle(color: Colors.white),
-                  enableNextPreviousButtons: false,
-                    numbers:[
-                      1,
-                      2,
-                      3,
-                    ],
-                  activeStep: activeStep,
-                  onStepReached: (index) {
-                    setState(() {
-                      activeStep = index;
-                    });
-                  },
-                ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          // height: context.screenHeight,
+          padding: const EdgeInsets.all(18.0),
+          child: Column(
+            children: [
+              NumberStepper(
+                stepColor: primaryColor,
+                activeStepBorderColor: kPrimaryColor,
+                activeStepColor: kPrimaryFadeTextColor,
+                lineColor: kPrimaryColor,
+                stepPadding: 15.0,
+                numberStyle: TextStyle(color: Colors.white),
+                enableNextPreviousButtons: false,
+                numbers:[
+                  1,
+                  2,
+                  3,
+                ],
+                activeStep: activeStep,
+                onStepReached: (index) {
+                  setState(() {
+                    activeStep = index;
+                  });
+                },
+              ),
 
 
-                activeStep == 0?Container(
-                  // height: context.screenHeight *0.72,
-                  width: context.screenWidth,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+              activeStep == 0?Container(
+                // height: context.screenHeight *0.72,
+                width: context.screenWidth,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
 
-                      SizedBox(height: 20,),
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Text("Customer Details   گاہک کی تفصیلات", style: context.textTheme.headline6!
-                            .copyWith(fontWeight: FontWeight.bold),),
+                    SizedBox(height: 20,),
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text("Customer Details   گاہک کی تفصیلات", style: context.textTheme.headline6!
+                          .copyWith(fontWeight: FontWeight.bold),),
+                    ),
+                    Container(
+                      // height: context.screenHeight *0.62,
+                      width: context.screenWidth,
+                      padding: const EdgeInsets.all(12.0),
+
+                      child:
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          nameTextField(size),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          phoneTextField(size),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          emailTextField(size),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          // addressTextField(size),
+
+
+                          SizedBox(
+                            height: size.height * 0.05,
+                          ),
+
+                          CustomButton(
+                            buttonText:"Next   اگلے",
+                            onTap: () async {
+                              var email=_emailController.text;
+                              var phone=_phoneController.text;
+                              var name=_nameController.text;
+
+                              if(_nameController.text.isNotEmpty||_emailController.text.isNotEmpty||_phoneController.text.isNotEmpty){
+                                await homeProvider.Adduser(email,phone, name);
+
+                                // var  user_id =homeProvider.adduser?.data?.id.toString();
+                                print("UserId ${user_id}");
+
+                                activeStep = 1;
+
+                                homeProvider.GetMeasurement(_phoneController.text);
+                                setState(() {
+                                });
+                              }
+                              else{
+                                Utils.show("Fill all fields first");
+
+                              }
+                            },
+                          ),
+                        ],
                       ),
-                      Container(
-                        // height: context.screenHeight *0.62,
-                        width: context.screenWidth,
-                        padding: const EdgeInsets.all(12.0),
 
-                        child:
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            nameTextField(size),
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
-                            phoneTextField(size),
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
-                            emailTextField(size),
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
-                            // addressTextField(size),
-
-
-                            SizedBox(
-                              height: size.height * 0.05,
-                            ),
-
-                            CustomButton(
-                                buttonText:"Next   اگلے",
-                                onTap: () async {
-var email=_emailController.text;
-var phone=_phoneController.text;
-var name=_nameController.text;
-
-                                  if(_nameController.text.isNotEmpty||_emailController.text.isNotEmpty||_phoneController.text.isNotEmpty){
-                                    await homeProvider.Adduser(email,phone, name);
-
-                                  // var  user_id =homeProvider.adduser?.data?.id.toString();
-                                   print("UserId ${user_id}");
-
-                                    activeStep = 1;
-
-                                    homeProvider.GetMeasurement(_phoneController.text);
-                                  setState(() {
-                                  });
-                                }
-                                  else{
-                                    Utils.show("Fill all fields first");
-
-                                  }
-                              },
-                            ),
-                          ],
-                        ),
-
-                      )],
-                  ),
-                ):activeStep == 1?Column(
+                    )],
+                ),
+              ):activeStep == 1?Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -593,9 +595,9 @@ var name=_nameController.text;
                                                         BorderRadius.all(Radius.circular(4)),
                                                       ),
                                                       child:
-                                                      Image.memory(
-                                                        base64Decode(
-                                                            _pickedAllFiles[index]),
+                                                      Image.file(
+
+                                                        _pickedAllFiles[index],
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
@@ -739,7 +741,7 @@ var name=_nameController.text;
                                 color:  Colors.grey.shade200,
                                 child: Center(child: TextField(
                                   enabled: false,
-controller:_customerfabricController,
+                                  controller:_customerfabricController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     hintText: '${rNum}',
@@ -829,9 +831,9 @@ controller:_customerfabricController,
                                                         BorderRadius.all(Radius.circular(4)),
                                                       ),
                                                       child:
-                                                      Image.memory(
-                                                        base64Decode(
-                                                            _pickedFiles[index]),
+                                                      Image.file(
+
+                                                        _pickedFiles[index],
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
@@ -979,462 +981,462 @@ controller:_customerfabricController,
                             )):Container(),
 
 
-                        categoryName == null?Container()
-                            :Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: GridView.builder(
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 4,
-                                  crossAxisSpacing: 30,
-                                  mainAxisSpacing: 20),
-                              itemCount: sizes.length,
-                              shrinkWrap: true,
-                              // physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (BuildContext ctx, index) {
-                                return InkWell(
-                                  onTap: (){
-                                    SelectedSize= sizes[index];
-                                    setState(() {
-                                      SelectedSize=="Generate Code"?
-                                      rNum = min + randomizer.nextInt(max - min):0;
-                                      // push(context, Invite(randomNum: rNum));
-                                    });
+                            categoryName == null?Container()
+                                :Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: GridView.builder(
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 4,
+                                      crossAxisSpacing: 30,
+                                      mainAxisSpacing: 20),
+                                  itemCount: sizes.length,
+                                  shrinkWrap: true,
+                                  // physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (BuildContext ctx, index) {
+                                    return InkWell(
+                                      onTap: (){
+                                        SelectedSize= sizes[index];
+                                        setState(() {
+                                          SelectedSize=="Generate Code"?
+                                          rNum = min + randomizer.nextInt(max - min):0;
+                                          // push(context, Invite(randomNum: rNum));
+                                        });
 
-                                  },
-                                  child: Container(
-
-                                    decoration: BoxDecoration(
-                                      // color: isSelected == 0? kPrimaryColor: getColorBasedOnTheme(
-                                      //     context, kLightColor, kDarkCardBgColor),
-                                        borderRadius: BorderRadius.circular(5),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: SelectedSize == sizes[index].toString()?
-                                            Colors.grey.shade200:
-                                            Colors.grey.shade200,
-                                            blurRadius: 6,
-                                            offset: const Offset(0, 0),
-                                            spreadRadius: 0,
-                                          ),
-                                        ]),
-                                    child: Card(
+                                      },
                                       child: Container(
-                                        color: SelectedSize == sizes[index].toString()?
-                                        Colors.grey.shade400:
-                                        Colors.grey.shade200,
-                                        // height: 20,
-                                        child: Center(child: Text(sizes[index], style: context.textTheme.subtitle2,overflow: TextOverflow.ellipsis,)),
+
+                                        decoration: BoxDecoration(
+                                          // color: isSelected == 0? kPrimaryColor: getColorBasedOnTheme(
+                                          //     context, kLightColor, kDarkCardBgColor),
+                                            borderRadius: BorderRadius.circular(5),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: SelectedSize == sizes[index].toString()?
+                                                Colors.grey.shade200:
+                                                Colors.grey.shade200,
+                                                blurRadius: 6,
+                                                offset: const Offset(0, 0),
+                                                spreadRadius: 0,
+                                              ),
+                                            ]),
+                                        child: Card(
+                                          child: Container(
+                                            color: SelectedSize == sizes[index].toString()?
+                                            Colors.grey.shade400:
+                                            Colors.grey.shade200,
+                                            // height: 20,
+                                            child: Center(child: Text(sizes[index], style: context.textTheme.subtitle2,overflow: TextOverflow.ellipsis,)),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                );
-                              }
-                          ),
-                        ),
-                        SizedBox(height: 10,),
-                        SelectedSize=="Generate Code"?
-                        GestureDetector(
-
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                              child: Container(
-                                // height: 30,
-                                // width: 90,
-                                color:  Colors.grey.shade200,
-                                child: Center(child: TextField(
-                                  enabled: false,
-
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: '$rNum',
-                                  ),
-
-                                )),),
-                            ))
-                            :SelectedSize=="Customize"?
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          child: GestureDetector(
-                            onTap: (){
-                              if (categoryName != null) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            Measurements(categoryName, _pickedAllFiles, _pickedFiles,rNum.toString(),_fabriccodecontroller.text,
-                                              _productcodeController.text,_productlinkController.text)));
-                                // tabIndex = 2;
-                                // setState(() {
-                                //
-                                // });
-
-
-                              } else {
-
-                              }
-                            },
-                            child: Column(
-                              children: [
-                                // GridView.builder
-                                //   (
-                                //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                //         crossAxisCount: 2,
-                                //         childAspectRatio: 4,
-                                //         crossAxisSpacing: 30,
-                                //         mainAxisSpacing: 20),
-                                //     itemCount: homeProvider.getmeasurement?.length,
-                                //     shrinkWrap: true,
-                                //     // physics: const NeverScrollableScrollPhysics(),
-                                //     itemBuilder: (BuildContext ctx, index) {
-                                //       return InkWell(
-                                //         onTap: (){
-                                //           // SelectedSize= sizes[index];
-                                //           // setState(() {
-                                //           //   SelectedSize=="Generate Code"?
-                                //           //   rNum = min + randomizer.nextInt(max - min):0;
-                                //           //   // push(context, Invite(randomNum: rNum));
-                                //           // });
-                                //
-                                //         },
-                                //         child: Container(
-                                //
-                                //           decoration: BoxDecoration(
-                                //             // color: isSelected == 0? kPrimaryColor: getColorBasedOnTheme(
-                                //             //     context, kLightColor, kDarkCardBgColor),
-                                //               borderRadius: BorderRadius.circular(5),
-                                //               boxShadow: [
-                                //                 BoxShadow(
-                                //                   color: SelectedSize == sizes[index].toString()?
-                                //                   Colors.grey.shade200:
-                                //                   Colors.grey.shade200,
-                                //                   blurRadius: 6,
-                                //                   offset: const Offset(0, 0),
-                                //                   spreadRadius: 0,
-                                //                 ),
-                                //               ]),
-                                //           child: Card(
-                                //             child: Container(
-                                //               color: SelectedSize == sizes[index].toString()?
-                                //               Colors.grey.shade400:
-                                //               Colors.grey.shade200,
-                                //               // height: 20,
-                                //               child: Center(child: Text(sizes[index], style: context.textTheme.subtitle2,overflow: TextOverflow.ellipsis,)),
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       );
-                                //     }
-                                // ),
-                                Card(
-                                    child: Container(
-                                      height: 40,
-                                      color:  Colors.grey.shade200,
-                                      child: Center(child: Text("Add Measurements")),)),
-                              ],
+                                    );
+                                  }
+                              ),
                             ),
-                          ),
-                        )
-                            :Container(),
+                            SizedBox(height: 10,),
+                            SelectedSize=="Generate Code"?
+                            GestureDetector(
+
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                  child: Container(
+                                    // height: 30,
+                                    // width: 90,
+                                    color:  Colors.grey.shade200,
+                                    child: Center(child: TextField(
+                                      enabled: false,
+
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: '$rNum',
+                                      ),
+
+                                    )),),
+                                ))
+                                :SelectedSize=="Customize"?
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: GestureDetector(
+                                onTap: (){
+                                  if (categoryName != null) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Measurements(categoryName, _pickedAllFiles, _pickedFiles,rNum.toString(),_fabriccodecontroller.text,
+                                                    _productcodeController.text,_productlinkController.text)));
+                                    // tabIndex = 2;
+                                    // setState(() {
+                                    //
+                                    // });
+
+
+                                  } else {
+
+                                  }
+                                },
+                                child: Column(
+                                  children: [
+                                    // GridView.builder
+                                    //   (
+                                    //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    //         crossAxisCount: 2,
+                                    //         childAspectRatio: 4,
+                                    //         crossAxisSpacing: 30,
+                                    //         mainAxisSpacing: 20),
+                                    //     itemCount: homeProvider.getmeasurement?.length,
+                                    //     shrinkWrap: true,
+                                    //     // physics: const NeverScrollableScrollPhysics(),
+                                    //     itemBuilder: (BuildContext ctx, index) {
+                                    //       return InkWell(
+                                    //         onTap: (){
+                                    //           // SelectedSize= sizes[index];
+                                    //           // setState(() {
+                                    //           //   SelectedSize=="Generate Code"?
+                                    //           //   rNum = min + randomizer.nextInt(max - min):0;
+                                    //           //   // push(context, Invite(randomNum: rNum));
+                                    //           // });
+                                    //
+                                    //         },
+                                    //         child: Container(
+                                    //
+                                    //           decoration: BoxDecoration(
+                                    //             // color: isSelected == 0? kPrimaryColor: getColorBasedOnTheme(
+                                    //             //     context, kLightColor, kDarkCardBgColor),
+                                    //               borderRadius: BorderRadius.circular(5),
+                                    //               boxShadow: [
+                                    //                 BoxShadow(
+                                    //                    color: SelectedSize == sizes[index].toString()?
+                                    //                   Colors.grey.shade200:
+                                    //                   Colors.grey.shade200,
+                                    //                   blurRadius: 6,
+                                    //                   offset: const Offset(0, 0),
+                                    //                   spreadRadius: 0,
+                                    //                 ),
+                                    //               ]),
+                                    //           child: Card(
+                                    //             child: Container(
+                                    //               color: SelectedSize == sizes[index].toString()?
+                                    //               Colors.grey.shade400:
+                                    //               Colors.grey.shade200,
+                                    //               // height: 20,
+                                    //               child: Center(child: Text(sizes[index], style: context.textTheme.subtitle2,overflow: TextOverflow.ellipsis,)),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       );
+                                    //     }
+                                    // ),
+                                    Card(
+                                        child: Container(
+                                          height: 40,
+                                          color:  Colors.grey.shade200,
+                                          child: Center(child: Text("Add Measurements")),)),
+                                  ],
+                                ),
+                              ),
+                            )
+                                :Container(),
 
 
 // SizedBox(height: 20,),
-                        SelectedSize.toString().isNotEmpty && categoryName.toString().isNotEmpty ?
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: CustomButton(
-                            buttonText:"Next   اگلے",
-                            onTap: () async {
-                              // if(selectedCategory.isNotEmpty){
-                              activeStep = 2;
-                              setState(() {
+                            SelectedSize.toString().isNotEmpty && categoryName.toString().isNotEmpty ?
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: CustomButton(
+                                buttonText:"Next   اگلے",
+                                onTap: () async {
+                                  // if(selectedCategory.isNotEmpty){
+                                  activeStep = 2;
+                                  setState(() {
 
-                              });
-                              // }
-                            },
-                          ),
-                        ):Container(),
+                                  });
+                                  // }
+                                },
+                              ),
+                            ):Container(),
+
+
+                          ],
+                        ),
+
 
 
                       ],
                     ),
+                  ]):
 
-
-
-                  ],
-                ),
-                ]):
-
-                 activeStep == 2?
-                Container(
-                  // height: context.screenHeight *0.72,
-                  width: context.screenWidth,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-
-                      SizedBox(height: 20,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 10),
-                        child: Text("Finish Order    آرڈر ختم کریں", style: context.textTheme.headline6!
-                            .copyWith(fontWeight: FontWeight.bold),),
-                      ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: TextFormField(
-
-                              decoration: InputDecoration(
-                                labelText: "Try Date",
-                                labelStyle: context.textTheme.subtitle2!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color:  kDarkColor.withOpacity(0.8),
-
-                                ),
-                                contentPadding:
-                                const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    width: 2,
-                                  ),
-                                ),
-
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                      color: kLightColor.withOpacity(0.8),
-                                      width: 2),
-                                ),
-                                // prefixIcon: widget.prefixIcon,
-                                // prefix: widget.prefixIcon,
-                              ),
-                              controller: _dateController,
-                              readOnly: true,
-                              onTap: _pickDate,
-                              // callback: _pickDate(),
-                              // prefixIcon: Icon(Icons.calendar_today, size: 20,),
-
-                              // validator: (text) {
-                              //   // if (_dateController.text.isEmpty) {
-                              //   //   if (text == null || text.isEmpty) {
-                              //   //     return LocaleKeys.field_required.tr();
-                              //   //   }
-                              //   // }
-                              //   // return null;
-                              // },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: TextFormField(
-
-                              decoration: InputDecoration(
-                                labelText: "Delivery Date",
-                                labelStyle: context.textTheme.subtitle2!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color:  kDarkColor.withOpacity(0.8),
-
-                                ),
-                                contentPadding:
-                                const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    width: 2,
-                                  ),
-                                ),
-
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                      color: kLightColor.withOpacity(0.8),
-                                      width: 2),
-                                ),
-                                // prefixIcon: widget.prefixIcon,
-                                // prefix: widget.prefixIcon,
-                              ),
-                              controller: _deliverydateController,
-                              readOnly: true,
-                              onTap: _pickDeliveryDate,
-                              // callback: _pickDate(),
-                              // prefixIcon: Icon(Icons.calendar_today, size: 20,),
-
-                              // validator: (text) {
-                              //   // if (_dateController.text.isEmpty) {
-                              //   //   if (text == null || text.isEmpty) {
-                              //   //     return LocaleKeys.field_required.tr();
-                              //   //   }
-                              //   // }
-                              //   // return null;
-                              // },
-                            ),
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 12),
-                            child: Container(
-                              // height: context.screenHeight *0.62,
-                              width: context.screenWidth,
-                              // color: Colors.red,
-                              child: Text("Select Payment Method   ادائیگی کا طریقہ منتخب کریں"),
-
-
-                            ),
-                          ),
-
-                          Container(
-                            height: 40,
-// width: 300,
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                physics: const BouncingScrollPhysics(),
-                                padding: const EdgeInsets.all(0.0),
-                                itemCount:
-                                payment.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                    onTap: (){
-                                      Selectedpayment=payment[index];
-                                      setState(() {
-
-                                      });
-                                    },
-                                    child: Card(
-                                      child: Container(
-                                        width: 90,
-                                        color: Selectedpayment == payment[index].toString()?
-                                        Colors.grey.shade400:
-                                        Colors.grey.shade200,
-                                        child: Center(child: Text("${payment[index]}")),
-                                      ),
-                                    ),
-                                  );}),
-                          ),
-
-
-
-                          Selectedpayment=="Cash"?
-                          Container():
-                          Selectedpayment=="Card"?
-                          Container()
-                              :Selectedpayment=="Bank Transfer"?  Container():Container(),
-
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 12),
-                            child: Container(
-                              // height: context.screenHeight *0.62,
-                              width: context.screenWidth,
-                              // color: Colors.red,
-                              child: Text("Advance Paid   ایڈوانس ادا کیا گیا"),
-
-
-                            ),
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 0),
-                            child: Container(
-                              height: 50,
-                              // width: 90,
-                              // color:  Colors.grey.shade200,
-                              child: Center(child:TextField(
-                                controller:_advanceController ,
-                                keyboardType: TextInputType.number,
-
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                    BorderSide(width: 1, color: Colors.grey), //<-- SEE HERE
-                                    borderRadius: BorderRadius.circular(15.0),
-
-                                  ),
-                                ),
-                              )
-                              ),),
-                          ),
-
-
-
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 12),
-                            child: Container(
-                              // height: context.screenHeight *0.62,
-                              width: context.screenWidth,
-                              // color: Colors.red,
-                              child: Text("Decided Total Amount   کل رقم کا فیصلہ کیا"),
-
-
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 0),
-                            child: Container(
-                              height: 50,
-                              // width: 90,
-                              // color:  Colors.grey.shade200,
-                              child: Center(child:TextField(
-                                controller:_totalController ,
-                                keyboardType: TextInputType.number,
-
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                    BorderSide(width: 1, color: Colors.grey), //<-- SEE HERE
-                                    borderRadius: BorderRadius.circular(15.0),
-
-                                  ),
-                                ),
-                              )
-                              ),),
-                          ),
-
-
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 8),
-                        child: CustomButton(
-                          buttonText:"Done",
-                          onTap: () async {
-                            Navigator.pop(context);
-                            setState(() {
-
-                            });
-                            // }
-                          },
-                        ),
-                      ),
-
-                    ],
-                  ),
-                ):Column(
+              activeStep == 2?
+              Container(
+                // height: context.screenHeight *0.72,
+                width: context.screenWidth,
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
 
+                    SizedBox(height: 20,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 10),
+                      child: Text("Finish Order    آرڈر ختم کریں", style: context.textTheme.headline6!
+                          .copyWith(fontWeight: FontWeight.bold),),
+                    ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: TextFormField(
+
+                            decoration: InputDecoration(
+                              labelText: "Try Date",
+                              labelStyle: context.textTheme.subtitle2!.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color:  kDarkColor.withOpacity(0.8),
+
+                              ),
+                              contentPadding:
+                              const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                  width: 2,
+                                ),
+                              ),
+
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                    color: kLightColor.withOpacity(0.8),
+                                    width: 2),
+                              ),
+                              // prefixIcon: widget.prefixIcon,
+                              // prefix: widget.prefixIcon,
+                            ),
+                            controller: _dateController,
+                            readOnly: true,
+                            onTap: _pickDate,
+                            // callback: _pickDate(),
+                            // prefixIcon: Icon(Icons.calendar_today, size: 20,),
+
+                            // validator: (text) {
+                            //   // if (_dateController.text.isEmpty) {
+                            //   //   if (text == null || text.isEmpty) {
+                            //   //     return LocaleKeys.field_required.tr();
+                            //   //   }
+                            //   // }
+                            //   // return null;
+                            // },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: TextFormField(
+
+                            decoration: InputDecoration(
+                              labelText: "Delivery Date",
+                              labelStyle: context.textTheme.subtitle2!.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color:  kDarkColor.withOpacity(0.8),
+
+                              ),
+                              contentPadding:
+                              const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                  width: 2,
+                                ),
+                              ),
+
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                    color: kLightColor.withOpacity(0.8),
+                                    width: 2),
+                              ),
+                              // prefixIcon: widget.prefixIcon,
+                              // prefix: widget.prefixIcon,
+                            ),
+                            controller: _deliverydateController,
+                            readOnly: true,
+                            onTap: _pickDeliveryDate,
+                            // callback: _pickDate(),
+                            // prefixIcon: Icon(Icons.calendar_today, size: 20,),
+
+                            // validator: (text) {
+                            //   // if (_dateController.text.isEmpty) {
+                            //   //   if (text == null || text.isEmpty) {
+                            //   //     return LocaleKeys.field_required.tr();
+                            //   //   }
+                            //   // }
+                            //   // return null;
+                            // },
+                          ),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 12),
+                          child: Container(
+                            // height: context.screenHeight *0.62,
+                            width: context.screenWidth,
+                            // color: Colors.red,
+                            child: Text("Select Payment Method   ادائیگی کا طریقہ منتخب کریں"),
+
+
+                          ),
+                        ),
+
+                        Container(
+                          height: 40,
+// width: 300,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(),
+                              padding: const EdgeInsets.all(0.0),
+                              itemCount:
+                              payment.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return GestureDetector(
+                                  onTap: (){
+                                    Selectedpayment=payment[index];
+                                    setState(() {
+
+                                    });
+                                  },
+                                  child: Card(
+                                    child: Container(
+                                      width: 90,
+                                      color: Selectedpayment == payment[index].toString()?
+                                      Colors.grey.shade400:
+                                      Colors.grey.shade200,
+                                      child: Center(child: Text("${payment[index]}")),
+                                    ),
+                                  ),
+                                );}),
+                        ),
+
+
+
+                        Selectedpayment=="Cash"?
+                        Container():
+                        Selectedpayment=="Card"?
+                        Container()
+                            :Selectedpayment=="Bank Transfer"?  Container():Container(),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 12),
+                          child: Container(
+                            // height: context.screenHeight *0.62,
+                            width: context.screenWidth,
+                            // color: Colors.red,
+                            child: Text("Advance Paid   ایڈوانس ادا کیا گیا"),
+
+
+                          ),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 0),
+                          child: Container(
+                            height: 50,
+                            // width: 90,
+                            // color:  Colors.grey.shade200,
+                            child: Center(child:TextField(
+                              controller:_advanceController ,
+                              keyboardType: TextInputType.number,
+
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(width: 1, color: Colors.grey), //<-- SEE HERE
+                                  borderRadius: BorderRadius.circular(15.0),
+
+                                ),
+                              ),
+                            )
+                            ),),
+                        ),
+
+
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 12),
+                          child: Container(
+                            // height: context.screenHeight *0.62,
+                            width: context.screenWidth,
+                            // color: Colors.red,
+                            child: Text("Decided Total Amount   کل رقم کا فیصلہ کیا"),
+
+
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 0),
+                          child: Container(
+                            height: 50,
+                            // width: 90,
+                            // color:  Colors.grey.shade200,
+                            child: Center(child:TextField(
+                              controller:_totalController ,
+                              keyboardType: TextInputType.number,
+
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(width: 1, color: Colors.grey), //<-- SEE HERE
+                                  borderRadius: BorderRadius.circular(15.0),
+
+                                ),
+                              ),
+                            )
+                            ),),
+                        ),
+
+
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 8),
+                      child: CustomButton(
+                        buttonText:"Done",
+                        onTap: () async {
+                          Navigator.pop(context);
+                          setState(() {
+
+                          });
+                          // }
+                        },
+                      ),
+                    ),
+
                   ],
-                )
+                ),
+              ):Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
 
-              ],
-            ),
+                ],
+              )
 
 
-
-
-
+            ],
           ),
 
-                    // :Container(),
-            ),
-          );
-        // );
+
+
+
+
+        ),
+
+        // :Container(),
+      ),
+    );
+    // );
     // );
   }
 

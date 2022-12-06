@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/controller/home_controller.dart';
@@ -12,8 +14,8 @@ import '../helper/custom_button.dart';
 class Measurements extends StatefulWidget {
   const Measurements(this.categoryName,this.pickedAllFiles, this.pickedFiles, this.customerfabric,  this.fabriccode, this.productcode, this.productlink, {Key? key}) : super(key: key);
  final String? categoryName;
- final List pickedAllFiles;
-  final List pickedFiles;
+ final List<File>? pickedAllFiles;
+  final List<File>? pickedFiles;
   final String? customerfabric;
   final String? fabriccode;
   final String? productcode;
@@ -968,7 +970,7 @@ backgroundColor: primaryColor,
 
 
                         // fieldItems.add(neck,biceps,crossback,halfback,shoulder,sleeves,chest,waist,hip,coatlength);
-                     await   homeProvider.AddMeasurement(user_id,widget.categoryName, widget.pickedAllFiles,widget.pickedFiles,
+                     await   homeProvider.AddMeasurement(user_id,widget.categoryName, widget.pickedAllFiles!,widget.pickedFiles!,
                             neck,biceps,crossback
                            , halfback, shoulder,sleeves,chest,waist,hip,coatlength,trouserlength,thigh,kurtalength,shalwarlength,belly,shirtlength,
                           widget.customerfabric,widget.fabriccode,widget.productcode,widget.productlink,
