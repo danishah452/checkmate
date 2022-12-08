@@ -57,14 +57,14 @@ GetMeasurement(String phoneno) async {
 
 
 
-Storeorder(String user_id,String showroom_id,String tryDate,String deliveryDate,String paymentMethod,String advancePaid,String decidedTotal,String address,String customerFabric,String productCode,
-    String productLink,String fabricCode,String measurement_id,fabricImages,productImages) async {
+Storeorder(String user_id,String tryDate,String deliveryDate,String paymentMethod,String advancePaid,String decidedTotal,
+    List measurement_id,) async {
   // isloading = true;
   // notifyListeners();
 
   BaseAPIResponse? response =
-      await NetworkHelper.on().storeorderapicall( user_id, showroom_id,tryDate,deliveryDate,paymentMethod,advancePaid,decidedTotal,address,customerFabric,productCode,
-          productLink,fabricCode,measurement_id,fabricImages,productImages);
+      await NetworkHelper.on().storeorderapicall( user_id,tryDate,deliveryDate,paymentMethod,advancePaid,decidedTotal,
+          measurement_id,);
   if (response != null) {
     if (response.status!) {
       // Utils.show("${response.message}");

@@ -556,8 +556,7 @@ class NetworkHelper {
 
 
   Future<BaseAPIResponse?> storeorderapicall(
-      String user_id, showroom_id,tryDate,deliveryDate,paymentMethod,advancePaid,decidedTotal,address,customerFabric,productCode,
-      productLink,fabricCode,measurement_id,fabricImages,productImages
+      String user_id,tryDate,deliveryDate,paymentMethod,advancePaid,decidedTotal,measurement_id,
       ) async {
     http.Response response;
 
@@ -565,20 +564,16 @@ class NetworkHelper {
       addstore,
       {
         "user_id": user_id,
-        "showroom_id":showroom_id,
+        // "showroom_id":showroom_id,
         "tryDate":tryDate,
         "deliveryDate":deliveryDate,
         "paymentMethod":paymentMethod,
         "advancePaid":advancePaid,
         "decidedTotal": decidedTotal,
-        "address":address,
-        "customerFabric":customerFabric,
-        "productCode":productCode,
-        "productLink":productLink,
-        "fabricCode":fabricCode,
-        "measurement_id":measurement_id,
-        "fabricImages[0]":fabricImages[0],
-        "productImages[0]":productImages[0],
+        "address":"Johar town",
+
+        "measurement_id":14,
+
         // "category": category,
         // "measurement":measurement
       },

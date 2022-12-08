@@ -62,6 +62,7 @@ class _PostTaskScreenState extends State<PostTaskScreen> {
   TextEditingController _customerfabricController = TextEditingController();
   int selected = 0;
   String?  SelectedSize='';
+  List<String>?  Selectedmeasurement=[];
   String?  SelectedFabric='';
   String?  Selectedpayment='';
   String?  SelectedProduct='';
@@ -1064,8 +1065,8 @@ class _PostTaskScreenState extends State<PostTaskScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Measurements(categoryName, _pickedAllFiles, _pickedFiles,rNum.toString(),_fabriccodecontroller.text,
-                                                    _productcodeController.text,_productlinkController.text)));
+                                                Measurements(categoryName, _pickedAllFiles, _pickedFiles,rNum.toString(),_fabriccodecontroller.text.toString(),
+                                                    _productcodeController.text.toString(),_productlinkController.text.toString())));
                                     // tabIndex = 2;
                                     // setState(() {
                                     //
@@ -1078,56 +1079,56 @@ class _PostTaskScreenState extends State<PostTaskScreen> {
                                 },
                                 child: Column(
                                   children: [
-                                    // GridView.builder
-                                    //   (
-                                    //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    //         crossAxisCount: 2,
-                                    //         childAspectRatio: 4,
-                                    //         crossAxisSpacing: 30,
-                                    //         mainAxisSpacing: 20),
-                                    //     itemCount: homeProvider.getmeasurement?.length,
-                                    //     shrinkWrap: true,
-                                    //     // physics: const NeverScrollableScrollPhysics(),
-                                    //     itemBuilder: (BuildContext ctx, index) {
-                                    //       return InkWell(
-                                    //         onTap: (){
-                                    //           // SelectedSize= sizes[index];
-                                    //           // setState(() {
-                                    //           //   SelectedSize=="Generate Code"?
-                                    //           //   rNum = min + randomizer.nextInt(max - min):0;
-                                    //           //   // push(context, Invite(randomNum: rNum));
-                                    //           // });
-                                    //
-                                    //         },
-                                    //         child: Container(
-                                    //
-                                    //           decoration: BoxDecoration(
-                                    //             // color: isSelected == 0? kPrimaryColor: getColorBasedOnTheme(
-                                    //             //     context, kLightColor, kDarkCardBgColor),
-                                    //               borderRadius: BorderRadius.circular(5),
-                                    //               boxShadow: [
-                                    //                 BoxShadow(
-                                    //                    color: SelectedSize == sizes[index].toString()?
-                                    //                   Colors.grey.shade200:
-                                    //                   Colors.grey.shade200,
-                                    //                   blurRadius: 6,
-                                    //                   offset: const Offset(0, 0),
-                                    //                   spreadRadius: 0,
-                                    //                 ),
-                                    //               ]),
-                                    //           child: Card(
-                                    //             child: Container(
-                                    //               color: SelectedSize == sizes[index].toString()?
-                                    //               Colors.grey.shade400:
-                                    //               Colors.grey.shade200,
-                                    //               // height: 20,
-                                    //               child: Center(child: Text(sizes[index], style: context.textTheme.subtitle2,overflow: TextOverflow.ellipsis,)),
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       );
-                                    //     }
-                                    // ),
+                                    GridView.builder
+                                      (
+                                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 4,
+                                            crossAxisSpacing: 30,
+                                            mainAxisSpacing: 20),
+                                        itemCount: homeProvider.getmeasurement?.data?.length,
+                                        shrinkWrap: true,
+                                        // physics: const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (BuildContext ctx, index) {
+                                          return InkWell(
+                                            onTap: (){
+                                              // SelectedSize= sizes[index];
+                                              // setState(() {
+                                              //   SelectedSize=="Generate Code"?
+                                              //   rNum = min + randomizer.nextInt(max - min):0;
+                                              //   // push(context, Invite(randomNum: rNum));
+                                              // });
+
+                                            },
+                                            child: Container(
+
+                                              decoration: BoxDecoration(
+                                                // color: isSelected == 0? kPrimaryColor: getColorBasedOnTheme(
+                                                //     context, kLightColor, kDarkCardBgColor),
+                                                  borderRadius: BorderRadius.circular(5),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                       color: Selectedmeasurement == homeProvider.getmeasurement?.data![index].toString()?
+                                                      Colors.grey.shade200:
+                                                      Colors.grey.shade200,
+                                                      blurRadius: 6,
+                                                      offset: const Offset(0, 0),
+                                                      spreadRadius: 0,
+                                                    ),
+                                                  ]),
+                                              child: Card(
+                                                child: Container(
+                                                  color: Selectedmeasurement == homeProvider.getmeasurement?.data![index].toString()?
+                                                  Colors.grey.shade400:
+                                                  Colors.grey.shade200,
+                                                  // height: 20,
+                                                  child: Center(child: Text("${homeProvider.getmeasurement?.data![index].id.toString()}", style: context.textTheme.subtitle2,overflow: TextOverflow.ellipsis,)),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                    ),
                                     Card(
                                         child: Container(
                                           height: 40,
@@ -1147,6 +1148,7 @@ class _PostTaskScreenState extends State<PostTaskScreen> {
                               child: CustomButton(
                                 buttonText:"Next   اگلے",
                                 onTap: () async {
+
                                   // if(selectedCategory.isNotEmpty){
                                   activeStep = 2;
                                   setState(() {
@@ -1403,6 +1405,18 @@ class _PostTaskScreenState extends State<PostTaskScreen> {
                       child: CustomButton(
                         buttonText:"Done",
                         onTap: () async {
+                          var pref;
+                          var user_id;
+                          pref = await SharedPreferences.getInstance();
+                          user_id= pref.getString("id");
+                          print("userrrid${user_id}");
+                          print("measurementid${Selectedmeasurement}");
+                          // var paymentMethod;
+                          // var advancePaid;
+                          // var decidedTotal;
+                          var address;
+
+                          homeProvider.Storeorder(user_id, _dateController.text, _deliverydateController.text, Selectedpayment.toString(), _advanceController.text.toString(), _totalController.text.toString(),   Selectedmeasurement!, );
                           Navigator.pop(context);
                           setState(() {
 
